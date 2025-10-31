@@ -1,4 +1,4 @@
-import { styled } from '@mui/material';
+import { styled, TableCell } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom'
@@ -19,7 +19,6 @@ const ArrowIcon = styled(KeyboardArrowRightIcon)<IsActiveProps>(({ isActive }) =
 }))
 
 
-
 const LinkRouter = styled(Link)<IsActiveProps>(({ isActive }) => ({
   display: "flex",
   height: "50px",
@@ -28,11 +27,9 @@ const LinkRouter = styled(Link)<IsActiveProps>(({ isActive }) => ({
   borderRadius: "8px",
   fontWeight: "600",
   gap: isActive ? "1rem" : "0",
-  // background: "white",
   alignItems: "center",
   transition: "all 0.3s ease",
 
-  // justifyContent: isActive ? "flex-start" : "center",
   "&:hover": {
     backgroundColor: "#fff",
     color: "#151A2D"
@@ -48,7 +45,6 @@ const TitleSidebar = styled(Typography)<IsActiveProps>(({ isActive }) => ({
   color: "white",
   fontSize: "18px",
   fontWeight: "600",
-  // display: isActive ? "block" : "none",
   opacity: isActive ? "1" : "0",
   maxWidth: isActive ? "150px" : "0px",
   whiteSpace: "nowrap",
@@ -62,12 +58,19 @@ const Topbar = styled(Typography)({
   fontWeight: "bold",
   color: "white",
   backgroundColor: "#008cd4",
-  textAlign: "center"
+  textAlign: "center",
+  padding: "10px 0"
 })
+
+const CustomTableCell = styled(TableCell)(({}) => ({
+  color: "white"
+}))
+
 
 export { 
   ArrowIcon, 
   LinkRouter, 
   TitleSidebar,
-  Topbar
+  Topbar,
+  CustomTableCell
 }

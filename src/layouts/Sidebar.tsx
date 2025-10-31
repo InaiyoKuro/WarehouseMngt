@@ -21,9 +21,6 @@ const Sidebar = () => {
     {title: "Xuất báo cáo",  linkTo: "/report", icon: AssessmentIcon},
   ]
 
-  const toggleSidebar = () => {
-    console.log("hello")
-  }
 
   return (
     <Box sx={{
@@ -36,10 +33,15 @@ const Sidebar = () => {
       padding: "10px 15px",
       gap: "1rem",
     }}>
+      
       <ArrowIcon isActive={isActive} onClick={() => setIsActive(!isActive)} />
+
       {menuItems.map((item, index) => {
-        return (<Nav isActive={isActive} key={index} title={item.title} linkTo={item.linkTo} icon={item.icon}/>)
+        return (
+        <Nav isActive={isActive} key={index} title={item.title} linkTo={item.linkTo} icon={item.icon}/>
+        )
       })}
+
     </Box>
   )
 }
