@@ -1,4 +1,3 @@
-import './App.css'
 import MainLayout from './layouts/MainLayout'
 import { createBrowserRouter, Outlet, RouterProvider, type RouteObject } from 'react-router-dom'
 import ImportPage from './pages/ImportPage'
@@ -23,11 +22,10 @@ const appRoutes: RouteObject[] = [
   }
 ]
 
+
 const router = createBrowserRouter([
   {
-    element: (
-      <Outlet />
-    ),
+    element: <Outlet />,
     children: appRoutes
   }
 ])

@@ -1,16 +1,20 @@
-import { Link } from 'react-router-dom'
+import { LinkRouter, TitleSidebar } from './CustomStyle';
 
 type Props = {
-  name: string,
-  linkTo: string
+  title: string;
+  linkTo: string;
+  isActive: boolean;
+  icon: React.ElementType;
 }
 
 
-const Nav = ({ name, linkTo }: Props) => {
+
+const Nav = ({ title, linkTo, isActive, icon: Icon }: Props) => {
   return (
-    <Link to={linkTo} className='h-[50px] leading-[50px] hover:bg-[#F1FAFF] hover:text-[#151A2D] hover:transition-all hover:duration-200 hover:ease-in px-[10px]'>
-      {name}
-    </Link>
+    <LinkRouter isActive={isActive} to={linkTo}>
+      <Icon />
+      <TitleSidebar isActive={isActive}>{title}</TitleSidebar>
+    </LinkRouter>
   )
 }
 

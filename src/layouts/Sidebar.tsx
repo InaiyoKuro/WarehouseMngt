@@ -1,42 +1,46 @@
-import { useState } from 'react'
-import Nav from '../components/Nav'
 
-type MenuItem = {
-  name: string;
-  linkTo: string;
-}
+import { Box } from "@mui/material"
+import Nav from "../components/Nav"
+import { ArrowIcon } from "../components/CustomStyle"
+import { useState } from "react";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn"; 
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import AssessmentIcon from "@mui/icons-material/Assessment";
 
-const menuItems: MenuItem[] = [
-  { name: "Nhập kho", linkTo: "/import"},
-  { name: "Xuất kho", linkTo: "/export"},
-  { name: "Kiểm kê kho", linkTo: "/stocklist"},
-  { name: "Hàng hết hạn", linkTo: "/expired"},
-  { name: "Xuất báo cáo", linkTo: "/report"},
-]
+const Sidebar = () => {
 
-function Sidebar() {
+  const [isActive, setIsActive] = useState<boolean>(true);
 
-  const [isActive, setIsActive] = useState(true)
+  const menuItems = [
+    {title: "Nhập kho", linkTo: "/import", icon: Inventory2Icon},
+    {title: "Xuất kho",  linkTo: "/export", icon: LocalShippingIcon},
+    {title: "Kiểm kê kho",  linkTo: "/stocklist", icon: AssignmentTurnedInIcon},
+    {title: "Hàng hết hạn",  linkTo: "/expired", icon: WarningAmberIcon},
+    {title: "Xuất báo cáo",  linkTo: "/report", icon: AssessmentIcon},
+  ]
 
-  const toggle = () => {
-    setIsActive(!isActive)
+  const toggleSidebar = () => {
+    console.log("hello")
   }
 
   return (
-    <nav className={`flex flex-col bg-[#151A2D] text-white transition-all duration-300 ease-out ${isActive ? "w-[200px]": "w-[60px]"}`}>
-
-      <div className={`flex ${isActive ? "justify-end" : "justify-center"}`}>
-        <i className={`bx ${isActive ? "bx-x" : "bx-menu"} text-5xl text-end cursor-pointer`} onClick={toggle}></i> 
-      </div>
-
-      <div className={`flex flex-col ${isActive ? "block" : "hidden"}`}>
-        {
-          menuItems.map((item, index) => (
-            <Nav key={index} name={item.name} linkTo={item.linkTo} />
-          ))
-        }
-      </div>
-    </nav>
+    <Box sx={{
+      display: "flex",
+      flexDirection: "column",
+      backgroundColor: "#151A2D",
+      color: "white",
+      width: isActive ? "250px" : "80px",
+      transition: "all 0.3s ease",
+      padding: "10px 15px",
+      gap: "1rem",
+    }}>
+      <ArrowIcon isActive={isActive} onClick={() => setIsActive(!isActive)} />
+      {menuItems.map((item, index) => {
+        return (<Nav isActive={isActive} key={index} title={item.title} linkTo={item.linkTo} icon={item.icon}/>)
+      })}
+    </Box>
   )
 }
 
