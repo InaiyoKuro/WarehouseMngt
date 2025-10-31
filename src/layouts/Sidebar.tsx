@@ -23,7 +23,7 @@ function Sidebar() {
   }
 
   return (
-    <nav className={`flex flex-col bg-[#0F172A] text-white transition-all duration-300 ease-out ${isActive ? "w-[200px]": "w-[60px]"}`}>
+    <nav className={`flex flex-col bg-[#151A2D] text-white transition-all duration-300 ease-out ${isActive ? "w-[200px]": "w-[60px]"}`}>
 
       <div className={`flex ${isActive ? "justify-end" : "justify-center"}`}>
         <i className={`bx ${isActive ? "bx-x" : "bx-menu"} text-5xl text-end cursor-pointer`} onClick={toggle}></i> 
