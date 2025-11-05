@@ -11,7 +11,7 @@ type Props = {
 
 const Nav = ({ title, linkTo, isActive, icon: Icon }: Props) => {
   return (
-    <LinkRouter isActive={isActive} to={linkTo}>
+    <LinkRouter to={linkTo}>
       <Icon />
       <TitleSidebar isActive={isActive}>{title}</TitleSidebar>
     </LinkRouter>

@@ -1,13 +1,15 @@
-import { styled, TableCell } from '@mui/material';
+import { Button, InputAdornment, inputBaseClasses, styled, Table } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom'
 
 type IsActiveProps = {
-  isActive: boolean;
+  isActive?: boolean;
 }
 
-const ArrowIcon = styled(KeyboardArrowRightIcon)<IsActiveProps>(({ isActive }) => ({
+const ArrowIcon = styled(KeyboardArrowRightIcon, {
+  shouldForwardProp: (prop) => prop !== "isActive",
+})<IsActiveProps>(({ isActive }) => ({
   color: "#151A2D",
   backgroundColor: "white",
   fontSize: "35px",
@@ -19,14 +21,15 @@ const ArrowIcon = styled(KeyboardArrowRightIcon)<IsActiveProps>(({ isActive }) =
 }))
 
 
-const LinkRouter = styled(Link)<IsActiveProps>(({ isActive }) => ({
+
+const LinkRouter = styled(Link)<IsActiveProps>(({  }) => ({
   display: "flex",
   height: "50px",
   boxSizing: "border-box",
   padding: "0 13px",
   borderRadius: "8px",
   fontWeight: "600",
-  gap: isActive ? "1rem" : "0",
+  gap: "1rem",
   alignItems: "center",
   transition: "all 0.3s ease",
 
@@ -41,16 +44,19 @@ const LinkRouter = styled(Link)<IsActiveProps>(({ isActive }) => ({
 }))
 
 
-const TitleSidebar = styled(Typography)<IsActiveProps>(({ isActive }) => ({
+
+const TitleSidebar = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== "isActive",
+})<IsActiveProps>(({ isActive }) => ({
   color: "white",
   fontSize: "18px",
   fontWeight: "600",
   opacity: isActive ? "1" : "0",
-  maxWidth: isActive ? "150px" : "0px",
   whiteSpace: "nowrap",
   transition: "opacity 0.3s ease",
   pointerEvents: "none"
 }))
+
 
 
 const Topbar = styled(Typography)({
@@ -62,9 +68,37 @@ const Topbar = styled(Typography)({
   padding: "10px 0"
 })
 
-const CustomTableCell = styled(TableCell)(({}) => ({
-  color: "white"
+
+
+const CustomTable = styled(Table)(({}) => ({
+  "& .MuiTableCell-root": {
+    color: "white",
+    border: "2px solid black",
+    textAlign: "right",
+  }
 }))
+
+
+
+const CustomInputAdornment = styled(InputAdornment)(({}) => ({
+  opacity: 0,
+  pointerEvents: "none",
+  [`[data-shrink=true] ~ .${inputBaseClasses.root} > &`]: {
+    opacity: 1
+  }
+})) 
+
+
+
+
+const Submit = styled(Button)(({
+  mt: 2,
+  fontWeight: "bold",
+  padding: "10px 30px",
+  letterSpacing: "2px",
+  fontSize: "1rem"
+}))
+
 
 
 export { 
@@ -72,5 +106,7 @@ export {
   LinkRouter, 
   TitleSidebar,
   Topbar,
-  CustomTableCell
+  CustomTable,
+  CustomInputAdornment,
+  Submit
 }

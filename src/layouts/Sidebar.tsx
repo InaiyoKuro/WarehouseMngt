@@ -29,7 +29,7 @@ const Sidebar = () => {
       backgroundColor: "#151A2D",
       color: "white",
       width: isActive ? "250px" : "80px",
-      transition: "all 0.3s ease",
+      transition: "all 0.35s ease",
       padding: "10px 15px",
       gap: "1rem",
     }}>
