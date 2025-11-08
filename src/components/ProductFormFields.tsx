@@ -2,8 +2,7 @@ import { Grid, MenuItem, TextField } from "@mui/material"
 import { useState } from "react";
 import { CustomInputAdornment } from "./CustomStyle";
 
-
-type ProductProps = {
+export type ProductProps = {
   name: string;
   price?: number | null;
   manufactureDate: string;
@@ -11,11 +10,12 @@ type ProductProps = {
   quantity?: number | null;
   unit: string;
 }
+
 type Props = {
-  onSumChange?: (total: number) => void;
+  onProductChange?: (product: ProductProps) => void;
 }
 
-const ProductFormFields = ({ onSumChange }: Props) => {
+const ProductFormFields = ({ onProductChange }: Props) => {
   
   // Data of product
   const [product, setProduct] = useState<ProductProps>({
@@ -35,17 +35,18 @@ const ProductFormFields = ({ onSumChange }: Props) => {
     if(name == "quantity" || name == "price"){
       if(isNaN(Number(value))) return
     }
-
+    
     const newProduct = { ...product, [name]: value }
+    
     setProduct(newProduct)
     
-    console.log(newProduct)
-
-    const total = (Number(newProduct.price) || 0) * (Number(newProduct.quantity || 0))
-    // handleSum(total)
-    onSumChange?.(total)
+    
   }
 
+  const handleBlur = () => {
+    onProductChange?.(product)
+  }
+ 
 
   const fields = [
     {name: "name", label: "Tên đơn hàng", size: 4},
@@ -66,6 +67,7 @@ const ProductFormFields = ({ onSumChange }: Props) => {
               label={item.label}
               onChange={handleChange}
               value={product.unit}
+              onBlur={handleBlur}
               defaultValue={item.defaultValue} 
               fullWidth 
               select
@@ -80,6 +82,7 @@ const ProductFormFields = ({ onSumChange }: Props) => {
             value={product[item.name as keyof ProductProps] ?? ""}
             fullWidth
             type={item.type}
+            onBlur={handleBlur}
             variant="outlined"
             onChange={handleChange}
             InputLabelProps={

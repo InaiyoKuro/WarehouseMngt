@@ -24,6 +24,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.4",
+    "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.16",
     "uuidv4": "^6.2.13",
     "zustand": "^5.0.8"
