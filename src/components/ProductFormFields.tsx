@@ -1,5 +1,5 @@
 import { Grid, MenuItem, TextField } from "@mui/material"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CustomInputAdornment } from "./CustomStyle";
 
 export type ProductProps = {
@@ -13,19 +13,25 @@ export type ProductProps = {
 
 type Props = {
   onProductChange?: (product: ProductProps) => void;
+  resetSignal?: number;
 }
 
-const ProductFormFields = ({ onProductChange }: Props) => {
+const ProductFormFields = ({ onProductChange, resetSignal }: Props) => {
   
-  // Data of product
-  const [product, setProduct] = useState<ProductProps>({
+  const initialProduct = {
     name: "",
     price: null,
     manufactureDate: "",
     expiryDate: "",
     quantity: null,
     unit: ""
-  })
+  }
+
+  const [product, setProduct] = useState<ProductProps>(initialProduct)
+
+  useEffect(() => {
+    setProduct(initialProduct)
+  }, [resetSignal])
 
 
   // Set Input Data
@@ -39,7 +45,6 @@ const ProductFormFields = ({ onProductChange }: Props) => {
     const newProduct = { ...product, [name]: value }
     
     setProduct(newProduct)
-    
     
   }
 

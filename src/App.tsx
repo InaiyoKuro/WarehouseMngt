@@ -6,7 +6,6 @@ import 'boxicons/css/boxicons.min.css';
 import StockListPage from './pages/StockListPage'
 import ExpiredPage from './pages/ExpiredPage'
 import ReportPage from './pages/ReportPage'
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const appRoutes: RouteObject[] = [
@@ -33,12 +32,7 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-  return (
-  <>
-    <RouterProvider router={router} />
-    <ToastContainer position="top-right" autoClose={2000} limit={1} />;
-  </>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App

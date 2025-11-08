@@ -5,10 +5,12 @@ import { useMemo, useState } from "react";
 import type { ProductProps } from "../components/ProductFormFields";
 import { toast } from "react-toastify";
 import { isInvalidYear } from "../utils/DateUtils";
+import axios from "axios";
 
 const ImportPage = () => {
   const [product, setProduct] = useState<ProductProps | null>(null)
-
+  const [loading, setLoading] = useState(false)
+  const [resetSignal, setResetSignal] = useState(0)
 
   // Tổng giá tiền
   const total = useMemo(() => {
@@ -44,7 +46,7 @@ const ImportPage = () => {
       toast.error("NSX không hợp lệ!!!", { toastId })
       return false
     }
-    
+
     if(isInvalidYear(p?.expiryDate ?? "")){
       toast.error("HSD không hợp lệ!!!", { toastId })
       return false
@@ -58,14 +60,28 @@ const ImportPage = () => {
     return true
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     
     if(!validateProduct(product)) return
+    setLoading(true)
 
-    console.log(product)
+    // Thêm sản phẩm
+    try {
 
+      await axios.post("http://localhost:3001/api/products", product)
+      toast.success("Thêm sản phẩm thành công")
+
+      // Reset input
+      setResetSignal((prev) => prev + 1)
+
+    } catch (err) {
+      toast.success("Thêm sản phẩm thất bại")
+    } finally {
+      setLoading(false)
+    }
 
   }
+
   return (
     <Paper sx={{ p: 2 }} elevation={5}>
       <Typography variant="h2" sx={{ fontSize: "1.5rem" }}>Phiếu nhập kho</Typography>
@@ -73,7 +89,7 @@ const ImportPage = () => {
 
 
       <Grid container spacing={2}>
-        <ProductFormFields onProductChange={setProduct} />
+        <ProductFormFields onProductChange={setProduct} resetSignal={resetSignal} />
       </Grid>
       
 
@@ -84,7 +100,7 @@ const ImportPage = () => {
 
 
       <Box sx={{ display: "flex", justifyContent: "center"}}>
-        <Submit variant="contained" onClick={handleSubmit} loading={false}>Submit</Submit>
+        <Submit variant="contained" onClick={handleSubmit} loading={loading}>Submit</Submit>
       </Box>
     </Paper>
   )
