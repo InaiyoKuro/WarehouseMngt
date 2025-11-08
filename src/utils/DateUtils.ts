@@ -4,4 +4,10 @@ const isInvalidYear = (date: string) => {
   return (+year > 3000 || +year < 2000) ? true : false
 }
 
-export { isInvalidYear }
+
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString("vi-VN")
+}
+
+
+export { isInvalidYear, formatDate }

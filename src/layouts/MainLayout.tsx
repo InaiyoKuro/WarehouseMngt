@@ -24,7 +24,7 @@ function MainLayout() {
           <Outlet />
 
         </Box>
-        <ToastContainer position="top-right" autoClose={2000} limit={1} />;
+        <ToastContainer position="top-right" autoClose={2000} limit={1} />
       </div>
     </div>
   )
