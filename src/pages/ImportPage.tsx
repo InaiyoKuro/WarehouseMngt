@@ -1,11 +1,13 @@
 import { Box, Divider, Grid, Paper, Typography } from "@mui/material"
 import { Submit } from "../components/CustomStyle"
-import ProductFormFields from "../components/ProductFormFields";
-import { useMemo, useState } from "react";
+// import ProductFormFields from "../components/ProductFormFields";
+import React, { useMemo, useState } from "react";
 import type { ProductProps } from "../components/ProductFormFields";
 import { toast } from "react-toastify";
 import { isInvalidYear } from "../utils/DateUtils";
 import axios from "axios";
+
+const ProductFormFields = React.lazy(() => import("../components/ProductFormFields"))
 
 const ImportPage = () => {
   const [product, setProduct] = useState<ProductProps | null>(null)
