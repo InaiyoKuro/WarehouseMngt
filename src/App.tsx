@@ -3,6 +3,8 @@ import MainLayout from './layouts/MainLayout'
 import { createBrowserRouter, Outlet, RouterProvider, type RouteObject } from 'react-router-dom'
 import 'boxicons/css/boxicons.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import LoginPage from './pages/Auth/LoginPage';
+import RegisterPage from './pages/Auth/RegisterPage';
 
 // import ImportPage from './pages/ImportPage'
 // import ExportPage from './pages/ExportPage'
@@ -27,7 +29,16 @@ const appRoutes: RouteObject[] = [
         { path: "stocklist", element: <StockListPage /> },
         { path: "expired", element: <ExpiredPage /> },
         { path: "report", element: <ReportPage /> },
+
     ]
+  },
+  {
+    path: "login",
+    element: <LoginPage />
+  },
+  {
+    path: "register",
+    element: <RegisterPage />
   }
 ]
 

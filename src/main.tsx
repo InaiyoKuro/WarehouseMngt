@@ -8,7 +8,13 @@ const theme = createTheme({
   typography: {
     fontFamily: '"Poppins", sans-serif',
   },
+  palette: {
+    black: {
+      main: "#000"
+    },
+  },
 });
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

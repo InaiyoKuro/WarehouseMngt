@@ -20,10 +20,9 @@ function MainLayout() {
           justifyContent: "center",
           padding: "14px",
         }}>
-
           <Outlet />
-
         </Box>
+
         <ToastContainer position="top-right" autoClose={2000} limit={1} />
       </div>
     </div>
