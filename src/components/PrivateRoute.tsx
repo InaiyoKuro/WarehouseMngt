@@ -1,18 +1,22 @@
-import { type JSX } from 'react'
-import { isAuthenticated } from '../utils/CheckAuth'
 import { Navigate } from 'react-router-dom'
 
 type Props = {
-  children: JSX.Element
+  children: React.ReactNode;
+  roles?: string[]
 }
 
-const PrivateRoute: React.FC<Props> = ({ children }) => {
+const PrivateRoute = ({ children, roles = [] }: Props) => {
 
-  if(!isAuthenticated()){
-    return <Navigate to="/login" />
+  const user = localStorage.getItem("user")
+  const role = JSON.parse(user ?? "{}")?.role
+
+  console.log(role)
+
+  if(roles.length > 0 && !roles.includes(role)){
+    return <Navigate to="/" replace />
   }
 
-  return children
+  return <>{children}</>
 }
 
 export default PrivateRoute

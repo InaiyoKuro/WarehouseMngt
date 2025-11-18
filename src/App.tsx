@@ -7,6 +7,8 @@ import LoginPage from './pages/Auth/LoginPage';
 import RegisterPage from './pages/Auth/RegisterPage';
 import { ToastContainer } from 'react-toastify';
 import PrivateRoute from './components/PrivateRoute';
+import CheckInPage from './pages/CheckInPage';
+import AnalyticsPage from './pages/AnalyticsPage';
 
 // import ImportPage from './pages/ImportPage'
 // import ExportPage from './pages/ExportPage'
@@ -25,12 +27,19 @@ const appRoutes: RouteObject[] = [
     path: "/",
     element: <MainLayout />,
     children: [ 
-        { index: true, element: <ImportPage /> },
-        { path: "import", element: <ImportPage /> },
+        { index: true, element: <CheckInPage /> },
+        { path: "check-in", element: <CheckInPage />},
+        { path: "import", element: <ImportPage />},
         { path: "export", element: <ExportPage /> },
-        { path: "stocklist", element: <StockListPage /> },
-        { path: "expired", element: <ExpiredPage /> },
-        { path: "report", element: <ReportPage /> },
+        
+        { path: "stocklist",
+          element: <PrivateRoute roles={["master","manager"]}><StockListPage /></PrivateRoute>},
+        { path: "expired",
+          element: <PrivateRoute roles={["master","manager"]}><ExpiredPage /></PrivateRoute>},
+        { path: "report",
+          element: <PrivateRoute roles={["master","manager"]}><ReportPage /></PrivateRoute>},
+        { path: "analytics",
+          element: <PrivateRoute roles={["master"]}><AnalyticsPage /></PrivateRoute>},
 
     ]
   },

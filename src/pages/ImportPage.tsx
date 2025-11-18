@@ -6,6 +6,7 @@ import type { ProductProps } from "../components/ProductFormFields";
 import { toast } from "react-toastify";
 import { isInvalidYear } from "../utils/DateUtils";
 import axios from "axios";
+import CheckPermissions from "../components/CheckPermissions";
 
 const ProductFormFields = React.lazy(() => import("../components/ProductFormFields"))
 
@@ -100,10 +101,16 @@ const ImportPage = () => {
         textAlign: "right"
       }}>Tổng cộng: <b>{new Intl.NumberFormat("vi-VN").format(total || 0).replace(/\./g,",")} VNĐ</b></Typography>
 
-
+      
       <Box sx={{ display: "flex", justifyContent: "center"}}>
-        <Submit variant="contained" onClick={handleSubmit} loading={loading}>Submit</Submit>
+        <CheckPermissions roles={["master", "manager"]}>
+          <Submit variant="contained" onClick={handleSubmit} loading={loading}>Submit</Submit>
+        </CheckPermissions>
+        <CheckPermissions roles={["staff"]}>
+          <Submit variant="contained" onClick={handleSubmit} loading={loading}>Yêu cầu nhập kho</Submit>
+        </CheckPermissions>
       </Box>
+
     </Paper>
   )
 }

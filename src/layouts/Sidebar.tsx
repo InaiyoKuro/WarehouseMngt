@@ -8,17 +8,22 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn"; 
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import AssessmentIcon from "@mui/icons-material/Assessment";
+import CheckPermissions from "../components/CheckPermissions";
+import DomainVerificationIcon from '@mui/icons-material/DomainVerification';
+import CandlestickChartIcon from '@mui/icons-material/CandlestickChart';
 
 const Sidebar = () => {
 
   const [isActive, setIsActive] = useState<boolean>(true);
 
   const menuItems = [
-    {title: "Nhập kho", linkTo: "/import", icon: Inventory2Icon},
-    {title: "Xuất kho",  linkTo: "/export", icon: LocalShippingIcon},
-    {title: "Kiểm kê kho",  linkTo: "/stocklist", icon: AssignmentTurnedInIcon},
-    {title: "Hàng hết hạn",  linkTo: "/expired", icon: WarningAmberIcon},
-    {title: "Xuất báo cáo",  linkTo: "/report", icon: AssessmentIcon},
+    {title: "Chấm công", linkTo: "/check-in", icon: DomainVerificationIcon, roles: ["master","manager","staff"]},
+    {title: "Nhập kho", linkTo: "/import", icon: Inventory2Icon, roles: ["master","manager","staff"]},
+    {title: "Xuất kho",  linkTo: "/export", icon: LocalShippingIcon, roles: ["master","manager","staff"]},
+    {title: "Kiểm kê kho",  linkTo: "/stocklist", icon: AssignmentTurnedInIcon, roles: ["master","manager"]},
+    {title: "Hàng hết hạn",  linkTo: "/expired", icon: WarningAmberIcon, roles: ["master","manager"]},
+    {title: "Xuất báo cáo",  linkTo: "/report", icon: AssessmentIcon, roles: ["master","manager"]},
+    {title: "Thống kê",  linkTo: "/analytics", icon: CandlestickChartIcon, roles: ["master","manager"]},
   ]
 
 
@@ -38,7 +43,10 @@ const Sidebar = () => {
 
       {menuItems.map((item, index) => {
         return (
-        <Nav isActive={isActive} key={index} title={item.title} linkTo={item.linkTo} icon={item.icon}/>
+        <CheckPermissions roles={item.roles}>
+
+          <Nav isActive={isActive} key={index} title={item.title} linkTo={item.linkTo} icon={item.icon}/>
+        </CheckPermissions>
         )
       })}
 

@@ -1,6 +1,6 @@
 import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout';
-import { replace, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Topbar = () => {
 
@@ -9,7 +9,7 @@ const Topbar = () => {
   const handleClick = () => {
     localStorage.removeItem("isLoggedIn")
     localStorage.removeItem("user")
-    navigate("/", { replace: true })
+    navigate("/")
     window.location.reload()
   }
 

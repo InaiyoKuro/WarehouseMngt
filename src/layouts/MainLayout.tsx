@@ -3,12 +3,21 @@ import Sidebar from './Sidebar'
 import { Navigate, Outlet } from 'react-router-dom'
 import Topbar from '../components/CustomComponents/Topbar'
 import { isAuthenticated } from '../utils/CheckAuth'
+import { useEffect } from 'react'
 
 function MainLayout() {
 
   if(!isAuthenticated()){
     return <Navigate to="/login" />
   }
+
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+    // if(user){
+    const role = JSON.parse(user ?? "{}").role
+    console.log(role)
+    // }
+  },[])
 
   return (
     <div className='flex flex-col'>

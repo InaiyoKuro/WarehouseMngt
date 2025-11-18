@@ -3,6 +3,8 @@ import Paper from '@mui/material/Paper';
 import type { GridColDef } from "@mui/x-data-grid"
 import { getProducts } from '../services/api';
 import { useEffect, useState } from 'react';
+import { Box, Button } from '@mui/material';
+import CheckPermissions from '../components/CheckPermissions';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 50 },
@@ -23,19 +25,27 @@ const ExportPage = () => {
     getProducts().then(data => setProducts(data))
   }, [])
 
-  console.log([products])
-
   return (
-    <Paper sx={{ height: 400 }} elevation={6}>
-      <DataGrid
-        rows={products}
-        columns={columns}
-        initialState={{ pagination: { paginationModel } }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-        sx={{ border: 0 }}
-      />
-    </Paper>
+    <Box>
+      <Paper sx={{ height: 400 }} elevation={6}>
+        <DataGrid
+          rows={products}
+          columns={columns}
+          initialState={{ pagination: { paginationModel } }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection
+          sx={{ border: 0 }}
+          />
+      </Paper>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2, gap: 2 }}>
+        <CheckPermissions roles={["master","manager"]}> 
+          <Button variant='contained'>Xuất kho</Button>
+        </CheckPermissions>
+        <CheckPermissions roles={["staff"]}> 
+          <Button variant='contained'>Yêu cầu xuất kho</Button>
+        </CheckPermissions>
+      </Box>
+    </Box>
   );
 }
 
