@@ -1,7 +1,11 @@
 import { Box, FormControl, Paper, Typography } from "@mui/material"
 import TextFieldLogin from "../../components/CustomComponents/TextFieldLogin"
 import ButtonLogin from "../../components/CustomComponents/ButtonLogin"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import { api } from "../../services/api"
+import { isAuthenticated } from "../../utils/CheckAuth"
 
 type UserProps = {
   email: string;
@@ -18,6 +22,15 @@ const RegisterPage = () => {
     rePassword: ""
   })
 
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(isAuthenticated()){
+      navigate("/")
+    }
+  }, [])
+
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser((prev) => ({
       ...prev,
@@ -25,8 +38,55 @@ const RegisterPage = () => {
     }))
   }
 
-  const handleSubmit = () => {
-    console.log(user)
+
+  const handleSubmit = async() => {
+    const toastId = "toastId"
+    if(!user.email || !user.username || !user.password || !user.rePassword){
+      console.log("a")
+      toast.error("Vui lòng nhập đầy đủ thông tin", { toastId })
+      return
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRegex.test(user.email)){
+      toast.error("Email không hợp lệ", { toastId })
+      return
+    }
+
+    const usernameRegex = /^[a-zA-Z0-9]+$/;
+    if(!usernameRegex.test(user.username)){
+      toast.error("Username không hợp lệ", { toastId })
+      return
+    }
+
+    if(user.password.length < 6){
+      toast.error("Đặt mật khẩu dài hơn đi", { toastId })
+
+    }
+
+    if(user.password !== user.rePassword){
+      toast.error("Password không khớp", { toastId })
+      return
+    }
+    
+    try{
+      const data = {
+        email: user.email,
+        username: user.username,
+        password: user.password,
+      }
+
+      const res = await api.post("/api/auth/register", data)
+      if(res.status === 200){
+        toast.success("Đăng ký thành công", { toastId })
+        navigate("/login")
+        return
+      }
+    }catch(e){
+      console.error(e)
+      toast.error("Lỗi server", { toastId })
+    }
+    
   }
 
   return (
@@ -51,9 +111,9 @@ const RegisterPage = () => {
               <Typography color="primary" sx={{ cursor: "pointer" }}>Reset Password</Typography>
             </Box>
 
-            <Typography color="primary" sx={{ cursor: "pointer" }}>
-              Login
-            </Typography>
+            <Link to="/login">
+              <Typography color="primary">Login</Typography>
+            </Link>
           </Box>
         </FormControl>
     </Paper>

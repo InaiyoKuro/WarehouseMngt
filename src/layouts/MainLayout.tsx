@@ -2,7 +2,6 @@ import { Box } from '@mui/material'
 import Sidebar from './Sidebar'
 import { Outlet } from 'react-router-dom'
 import { Topbar } from '../components/CustomStyle'
-import { ToastContainer } from 'react-toastify'
 
 function MainLayout() {
   return (
@@ -23,7 +22,6 @@ function MainLayout() {
           <Outlet />
         </Box>
 
-        <ToastContainer position="top-right" autoClose={2000} limit={1} />
       </div>
     </div>
   )

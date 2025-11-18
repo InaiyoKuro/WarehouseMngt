@@ -1,17 +1,75 @@
 import { Box, FormControl, Paper, Typography } from "@mui/material"
 import TextFieldLogin from "../../components/CustomComponents/TextFieldLogin"
 import ButtonLogin from "../../components/CustomComponents/ButtonLogin"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
+import { api } from "../../services/api"
+import { isAuthenticated } from "../../utils/CheckAuth"
 
 const LoginPage = () => {
+  const [username, setUsername] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false)
+  
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(isAuthenticated()){
+      navigate("/")
+    }
+  }, [])
+
+  const handleSubmit = async() => {
+    try {
+      setLoading(true)
+
+      const toastId = "toastId"
+      if(!username || !password){
+        toast.error("Vui lòng điền đầy đủ thông tin", { toastId })
+        return
+      }
+
+      const usernameRegex = /^[a-zA-Z0-9]+$/;
+      if(!usernameRegex.test(username)){
+        toast.error("Username không hợp lệ", { toastId })
+        return
+      }
+
+      const data = {
+        username,
+        password
+      }
+        
+      const res = await api.post("/api/auth/login", data)
+      if(res.data.status){
+        toast.success("Đăng nhập thành công", { toastId })
+
+        localStorage.setItem("user", JSON.stringify(res.data.user))
+        localStorage.setItem("isLoggedIn", JSON.stringify(true))
+
+        navigate("/")
+        return
+      }
+
+      toast.error(res.data.msg, { toastId })
+
+    } catch(e){
+      console.log(e)
+      toast.error("Lỗi server", { toastId: "error" })
+    } finally {
+      setLoading(false)
+    }
+  }
   return (
     <Paper sx={{ display: "grid", placeItems: "center", height: "100vh" }}>
         <FormControl sx={{ width: "350px", gap: 3 }}>
           <Typography variant="h4" sx={{ textAlign: "center", fontWeight: "bold" }}>Login</Typography>
-          <TextFieldLogin label="Username" type="text" />
-          <TextFieldLogin label="Password" type="password" />
 
-          <ButtonLogin>Login</ButtonLogin>
+          <TextFieldLogin onChange={(e) => setUsername(e.target.value)} label="Username" type="text" />
+          <TextFieldLogin onChange={(e) => setPassword(e.target.value)} label="Password" type="password" />
+
+          <ButtonLogin onClick={handleSubmit} loading={loading}>Login</ButtonLogin>
 
           
           <Box sx={{ display: "flex", justifyContent: "space-between"}}>
@@ -22,7 +80,7 @@ const LoginPage = () => {
             </Box>
 
             <Link to="/register">
-              Register
+              <Typography color="primary">Register</Typography>
             </Link>
           </Box>
         </FormControl>

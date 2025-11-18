@@ -5,6 +5,8 @@ import 'boxicons/css/boxicons.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import LoginPage from './pages/Auth/LoginPage';
 import RegisterPage from './pages/Auth/RegisterPage';
+import { ToastContainer } from 'react-toastify';
+import PrivateRoute from './components/PrivateRoute';
 
 // import ImportPage from './pages/ImportPage'
 // import ExportPage from './pages/ExportPage'
@@ -21,7 +23,10 @@ const ReportPage = React.lazy(() => import("./pages/ReportPage"))
 const appRoutes: RouteObject[] = [
   {
     path: "/",
-    element: <MainLayout />,
+    element: (
+      <PrivateRoute>
+        <MainLayout />
+      </PrivateRoute>),
     children: [ 
         { index: true, element: <ImportPage /> },
         { path: "import", element: <ImportPage /> },
@@ -54,6 +59,7 @@ function App() {
   return (
     <Suspense>
       <RouterProvider router={router} />
+      <ToastContainer position="top-right" autoClose={2000} limit={1} />
     </Suspense>
   )
 }
