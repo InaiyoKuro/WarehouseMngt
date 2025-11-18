@@ -59,17 +59,6 @@ const TitleSidebar = styled(Typography, {
 
 
 
-const Topbar = styled(Typography)({
-  fontSize: "20px",
-  fontWeight: "bold",
-  color: "white",
-  backgroundColor: "#008cd4",
-  textAlign: "center",
-  padding: "10px 0"
-})
-
-
-
 const CustomTable = styled(Table)(({}) => ({
   "& .MuiTableCell-root": {
     color: "white",
@@ -106,7 +95,6 @@ export {
   ArrowIcon, 
   LinkRouter, 
   TitleSidebar,
-  Topbar,
   CustomTable,
   CustomInputAdornment,
   Submit,

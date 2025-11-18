@@ -23,10 +23,7 @@ const ReportPage = React.lazy(() => import("./pages/ReportPage"))
 const appRoutes: RouteObject[] = [
   {
     path: "/",
-    element: (
-      <PrivateRoute>
-        <MainLayout />
-      </PrivateRoute>),
+    element: <MainLayout />,
     children: [ 
         { index: true, element: <ImportPage /> },
         { path: "import", element: <ImportPage /> },
@@ -59,7 +56,7 @@ function App() {
   return (
     <Suspense>
       <RouterProvider router={router} />
-      <ToastContainer position="top-right" autoClose={2000} limit={1} />
+      <ToastContainer position="top-right" autoClose={1000} limit={1} />
     </Suspense>
   )
 }

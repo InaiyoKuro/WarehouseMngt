@@ -1,12 +1,18 @@
 import { Box } from '@mui/material'
 import Sidebar from './Sidebar'
-import { Outlet } from 'react-router-dom'
-import { Topbar } from '../components/CustomStyle'
+import { Navigate, Outlet } from 'react-router-dom'
+import Topbar from '../components/CustomComponents/Topbar'
+import { isAuthenticated } from '../utils/CheckAuth'
 
 function MainLayout() {
+
+  if(!isAuthenticated()){
+    return <Navigate to="/login" />
+  }
+
   return (
     <div className='flex flex-col'>
-      <Topbar>Warehouse Management</Topbar>
+      <Topbar />
 
       <div className='flex flex-row h-[calc(100vh-50px)]'>
         <Sidebar />
