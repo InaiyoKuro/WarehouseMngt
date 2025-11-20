@@ -1,3 +1,4 @@
+import { useAuth } from "../hooks/useAuth"
 
 type Props = {
   children: React.ReactNode,
@@ -5,8 +6,8 @@ type Props = {
 }
 
 const CheckPermissions = ({ children, roles = [] }: Props) => {
-  const user = localStorage.getItem("user")
-  const role = JSON.parse(user ?? "{}").role
+  const { user } = useAuth()  
+  const role = user?.role
 
   return role && roles.includes(role) ? <>{children}</> : null
 }

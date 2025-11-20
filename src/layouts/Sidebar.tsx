@@ -43,9 +43,8 @@ const Sidebar = () => {
 
       {menuItems.map((item, index) => {
         return (
-        <CheckPermissions roles={item.roles}>
-
-          <Nav isActive={isActive} key={index} title={item.title} linkTo={item.linkTo} icon={item.icon}/>
+        <CheckPermissions key={index} roles={item.roles}>
+          <Nav isActive={isActive}  title={item.title} linkTo={item.linkTo} icon={item.icon}/>
         </CheckPermissions>
         )
       })}

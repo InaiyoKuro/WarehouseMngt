@@ -1,23 +1,19 @@
 import { Box } from '@mui/material'
 import Sidebar from './Sidebar'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import Topbar from '../components/CustomComponents/Topbar'
-import { isAuthenticated } from '../utils/CheckAuth'
+import { useAuth } from '../hooks/useAuth'
 import { useEffect } from 'react'
 
 function MainLayout() {
-
-  if(!isAuthenticated()){
-    return <Navigate to="/login" />
-  }
-
+  const navigate = useNavigate()
+  const { user } = useAuth()
+  
   useEffect(() => {
-    const user = localStorage.getItem("user")
-    // if(user){
-    const role = JSON.parse(user ?? "{}").role
-    console.log(role)
-    // }
-  },[])
+    if(!user){
+      navigate("/login")
+    }
+  }, [])
 
   return (
     <div className='flex flex-col'>

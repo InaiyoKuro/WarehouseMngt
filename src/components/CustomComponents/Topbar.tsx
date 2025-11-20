@@ -1,18 +1,22 @@
 import { Box, IconButton, Tooltip, Typography } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useAuth } from '../../hooks/useAuth';
+import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
 const Topbar = () => {
+  const { setUser } = useAuth()  
+    const navigate = useNavigate()
 
-  const navigate = useNavigate()
 
-  const handleClick = () => {
-    localStorage.removeItem("isLoggedIn")
-    localStorage.removeItem("user")
-    navigate("/")
-    window.location.reload()
+  const handleLogout = () => {
+    Cookies.remove("accessToken")
+    Cookies.remove("refreshToken")
+    Cookies.remove("userId")
+
+    setUser(null)
+    navigate("/login")
   }
-
   return (
     <Box sx={{
       display: "flex",
@@ -29,7 +33,7 @@ const Topbar = () => {
       >Warehouse Management</Typography>
 
       <Tooltip title="Logout">
-        <IconButton onClick={handleClick} sx={{
+        <IconButton onClick={handleLogout} sx={{
           position: "absolute",
           top: 5,
           right: 0,

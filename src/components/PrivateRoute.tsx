@@ -1,4 +1,5 @@
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth';
 
 type Props = {
   children: React.ReactNode;
@@ -6,11 +7,10 @@ type Props = {
 }
 
 const PrivateRoute = ({ children, roles = [] }: Props) => {
+  const { user } = useAuth()
+  console.log(user)
 
-  const user = localStorage.getItem("user")
-  const role = JSON.parse(user ?? "{}")?.role
-
-  console.log(role)
+  const role = user?.role || ""
 
   if(roles.length > 0 && !roles.includes(role)){
     return <Navigate to="/" replace />

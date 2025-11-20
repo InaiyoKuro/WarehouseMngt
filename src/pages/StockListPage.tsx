@@ -23,8 +23,6 @@ const StockListPage = () => {
     getProducts().then(data => setProducts(data))
   }, [])
 
-  console.log([products])
-
   return (
     <Paper sx={{ height: 400 }} elevation={6}>
       <DataGrid

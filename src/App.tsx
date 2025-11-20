@@ -3,24 +3,21 @@ import MainLayout from './layouts/MainLayout'
 import { createBrowserRouter, Outlet, RouterProvider, type RouteObject } from 'react-router-dom'
 import 'boxicons/css/boxicons.min.css';
 import 'react-toastify/dist/ReactToastify.css';
-import LoginPage from './pages/Auth/LoginPage';
-import RegisterPage from './pages/Auth/RegisterPage';
+
 import { ToastContainer } from 'react-toastify';
 import PrivateRoute from './components/PrivateRoute';
-import CheckInPage from './pages/CheckInPage';
-import AnalyticsPage from './pages/AnalyticsPage';
-
-// import ImportPage from './pages/ImportPage'
-// import ExportPage from './pages/ExportPage'
-// import StockListPage from './pages/StockListPage'
-// import ExpiredPage from './pages/ExpiredPage'
-// import ReportPage from './pages/ReportPage'
+import AuthProvider from './Context/AuthProvider';
 
 const ImportPage = React.lazy(() => import("./pages/ImportPage"))
 const ExportPage = React.lazy(() => import("./pages/ExportPage"))
 const StockListPage = React.lazy(() => import("./pages/StockListPage"))
 const ExpiredPage = React.lazy(() => import("./pages/ExpiredPage"))
 const ReportPage = React.lazy(() => import("./pages/ReportPage"))
+const CheckInPage = React.lazy(() => import("./pages/CheckInPage"))
+const AnalyticsPage = React.lazy(() => import("./pages/AnalyticsPage"))
+
+const LoginPage = React.lazy(() => import("./pages/Auth/LoginPage"))
+const RegisterPage = React.lazy(() => import("./pages/Auth/RegisterPage"))
 
 const appRoutes: RouteObject[] = [
   {
@@ -40,7 +37,6 @@ const appRoutes: RouteObject[] = [
           element: <PrivateRoute roles={["master","manager"]}><ReportPage /></PrivateRoute>},
         { path: "analytics",
           element: <PrivateRoute roles={["master"]}><AnalyticsPage /></PrivateRoute>},
-
     ]
   },
   {
@@ -63,10 +59,13 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <Suspense>
-      <RouterProvider router={router} />
-      <ToastContainer position="top-right" autoClose={1000} limit={1} />
-    </Suspense>
+
+    <AuthProvider>
+      <Suspense>
+        <RouterProvider router={router} />
+        <ToastContainer position="top-right" autoClose={1000} limit={1} />
+      </Suspense>
+    </AuthProvider>
   )
 }
 

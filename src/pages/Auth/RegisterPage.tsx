@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { api } from "../../services/api"
-import { isAuthenticated } from "../../utils/CheckAuth"
 
 type UserProps = {
   email: string;
@@ -23,13 +22,6 @@ const RegisterPage = () => {
   })
 
   const navigate = useNavigate()
-
-  useEffect(() => {
-    if(isAuthenticated()){
-      navigate("/")
-    }
-  }, [])
-
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser((prev) => ({
