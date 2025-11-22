@@ -12,7 +12,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
 
     if(userId){
-      api.get("/api/auth/me")
+      api.get("/api/user/me")
       .then(res => {
         setUser(res.data.user)
         setIsLogin(true)

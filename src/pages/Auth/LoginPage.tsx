@@ -51,7 +51,6 @@ const LoginPage = () => {
         Cookies.set("userId", res.data.user.id)
 
         navigate("/")
-        window.location.reload()
         return
       }
 
