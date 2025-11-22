@@ -6,14 +6,21 @@ import { AuthContext, type UserProps } from "./AuthContext";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserProps>(null)
+  const [isLogin, setIsLogin] = useState<boolean>(false)
   const userId = Cookies.get("userId")
 
   useEffect(() => {
 
     if(userId){
       api.get("/api/auth/me")
-      .then(res => setUser(res.data.user))
-      .catch(() => setUser(null))
+      .then(res => {
+        setUser(res.data.user)
+        setIsLogin(true)
+      })
+      .catch(() => {
+        setUser(null)
+        setIsLogin(false)
+      })
     }
 
   }, [userId])
@@ -21,7 +28,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, setIsLogin, isLogin }}>
       {children}
     </AuthContext.Provider>
   )

@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
 const Topbar = () => {
-  const { setUser } = useAuth()  
+  const { setUser, setIsLogin } = useAuth()  
     const navigate = useNavigate()
 
 
@@ -15,6 +15,7 @@ const Topbar = () => {
     Cookies.remove("userId")
 
     setUser(null)
+    setIsLogin(false)
     navigate("/login")
   }
   return (

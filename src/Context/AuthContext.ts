@@ -9,6 +9,8 @@ export type UserProps = {
 type AuthContextProps = {
   user: UserProps;
   setUser: (user: UserProps) => void;
+  isLogin: boolean;
+  setIsLogin: (isLogin: boolean) => void;
 }
 
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined)

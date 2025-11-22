@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { api } from "../../services/api"
+import { useAuth } from "../../hooks/useAuth"
 
 type UserProps = {
   email: string;
@@ -20,8 +21,13 @@ const RegisterPage = () => {
     password: "",
     rePassword: ""
   })
+  const { isLogin } = useAuth()
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if(isLogin) navigate("/")
+  })
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser((prev) => ({

@@ -2,18 +2,24 @@ import { Box, FormControl, Paper, Typography } from "@mui/material"
 import TextFieldLogin from "../../components/CustomComponents/TextFieldLogin"
 import ButtonLogin from "../../components/CustomComponents/ButtonLogin"
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { api } from "../../services/api"
 import Cookies from "js-cookie"
+import { useAuth } from "../../hooks/useAuth"
 
 const LoginPage = () => {
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
+  const { isLogin } = useAuth()
 
   
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if(isLogin) navigate("/")
+  })
 
   const handleSubmit = async() => {
     try {
