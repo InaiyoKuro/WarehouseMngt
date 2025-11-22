@@ -19,24 +19,26 @@ const AnalyticsPage = React.lazy(() => import("./pages/AnalyticsPage"))
 const LoginPage = React.lazy(() => import("./pages/Auth/LoginPage"))
 const RegisterPage = React.lazy(() => import("./pages/Auth/RegisterPage"))
 
+
+const defaultRoles = ["master","manager","staff"]
 const appRoutes: RouteObject[] = [
   {
     path: "/",
     element: <MainLayout />,
-    children: [ 
-        { index: true, element: <CheckInPage /> },
-        { path: "check-in", element: <CheckInPage />},
-        { path: "import", element: <ImportPage />},
-        { path: "export", element: <ExportPage /> },
+    children: [
+        { index: true, element: <PrivateRoute roles={defaultRoles} component={CheckInPage} /> },
+        { path: "check-in", element: <PrivateRoute roles={defaultRoles} component={CheckInPage} />},
+        { path: "import", element: <PrivateRoute roles={defaultRoles} component={ImportPage} />},
+        { path: "export", element: <PrivateRoute roles={defaultRoles} component={ExportPage} /> },
         
         { path: "stocklist",
-          element: <PrivateRoute roles={["master","manager"]}><StockListPage /></PrivateRoute>},
+          element: <PrivateRoute roles={["master","manager"]} component={StockListPage} />},
         { path: "expired",
-          element: <PrivateRoute roles={["master","manager"]}><ExpiredPage /></PrivateRoute>},
+          element: <PrivateRoute roles={["master","manager"]} component={ExpiredPage} />},
         { path: "report",
-          element: <PrivateRoute roles={["master","manager"]}><ReportPage /></PrivateRoute>},
+          element: <PrivateRoute roles={["master","manager"]} component={ReportPage} />},
         { path: "analytics",
-          element: <PrivateRoute roles={["master"]}><AnalyticsPage /></PrivateRoute>},
+          element: <PrivateRoute roles={["master"]} component={AnalyticsPage} />},
     ]
   },
   {

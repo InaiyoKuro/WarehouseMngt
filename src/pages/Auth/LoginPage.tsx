@@ -12,7 +12,7 @@ const LoginPage = () => {
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
-  const { isLogin } = useAuth()
+  const { isLogin, setIsLogin } = useAuth()
 
   
   const navigate = useNavigate()
@@ -49,6 +49,8 @@ const LoginPage = () => {
         Cookies.set("accessToken", res.data.accessToken)
         Cookies.set("refreshToken", res.data.refreshToken)
         Cookies.set("userId", res.data.user.id)
+
+        setIsLogin(true)
 
         navigate("/")
         return

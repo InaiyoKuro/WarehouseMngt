@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Topbar = () => {
   const { setUser, setIsLogin } = useAuth()  
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
 
   const handleLogout = () => {
@@ -17,6 +17,7 @@ const Topbar = () => {
     setUser(null)
     setIsLogin(false)
     navigate("/login")
+    window.location.reload()
   }
   return (
     <Box sx={{

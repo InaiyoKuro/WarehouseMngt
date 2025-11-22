@@ -2,11 +2,11 @@ import { Navigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth';
 
 type Props = {
-  children: React.ReactNode;
+  component: React.ComponentType<any>;
   roles?: string[]
 }
 
-const PrivateRoute = ({ children, roles = [] }: Props) => {
+const PrivateRoute = ({ component: Component, roles = [] }: Props) => {
   const { user } = useAuth()
   console.log(user)
 
@@ -16,7 +16,7 @@ const PrivateRoute = ({ children, roles = [] }: Props) => {
     return <Navigate to="/" replace />
   }
 
-  return <>{children}</>
+  return <Component />
 }
 
 export default PrivateRoute
