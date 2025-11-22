@@ -7,10 +7,10 @@ import { useEffect } from 'react'
 
 function MainLayout() {
   const navigate = useNavigate()
-  const { user } = useAuth()
+  const { isLogin } = useAuth()
   
   useEffect(() => {
-    if(!user){
+    if(!isLogin){
       navigate("/login")
     }
   }, [])
